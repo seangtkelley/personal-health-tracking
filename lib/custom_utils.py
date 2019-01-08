@@ -3,6 +3,8 @@ import re
 import string
 import datetime
 import pandas as pd
+from wordcloud import WordCloud
+import collections
 
 nltk.download('stopwords')
 cachedStopWords = nltk.corpus.stopwords.words("english")
@@ -26,6 +28,16 @@ def prep_text_for_wordcloud(txt):
 
     # return word frequencies
     return txt
+
+def generate_wordcloud(txt):
+    # prep text
+    txt = prep_text_for_wordcloud(txt)
+
+    # get word frequencies
+    counts = dict(collections.Counter(txt.split()))
+
+    # create wordcloud
+    return WordCloud(background_color="white", max_words=100, margin=10,random_state=1).generate_from_frequencies(counts)
 
 
 def to_unix_time(dt):
