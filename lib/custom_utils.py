@@ -27,7 +27,12 @@ def prep_text_for_wordcloud(txt):
     # return word frequencies
     return txt
 
-def get_semester_asana(df, code):
+
+def to_unix_time(dt):
+    epoch =  datetime.datetime.utcfromtimestamp(0)
+    return (dt - epoch).total_seconds() * 1000
+
+def get_semester_date_range(code, unix_time=False):
     year = '20'+code[-2:]
     if 's' in code:
         start_date = datetime.datetime.strptime(year+'-01-20', '%Y-%m-%d')
@@ -35,5 +40,12 @@ def get_semester_asana(df, code):
     else:
         start_date = datetime.datetime.strptime(year+'-09-01', '%Y-%m-%d')
         end_date = datetime.datetime.strptime(year+'-12-22', '%Y-%m-%d')
-    
+        
+    if unix_time:
+        return [to_unix_time(start_date), to_unix_time(end_date)]
+    else:
+        return [start_date, end_date]
+
+def get_semester_asana(df, code):
+    start_date, end_date = get_semester_date_range(code)
     return df[(df['Created At'] > start_date) & (df['Created At'] < end_date)]
