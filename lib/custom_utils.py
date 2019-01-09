@@ -61,3 +61,7 @@ def get_semester_date_range(code, unix_time=False):
 def get_semester_asana(df, code):
     start_date, end_date = get_semester_date_range(code)
     return df[(df['Created At'] > start_date) & (df['Created At'] < end_date)]
+
+def get_semester_via_col(df, col, code):
+    start_date, end_date = get_semester_date_range(code)
+    return df[(df[col] > start_date) & (df[col] < end_date)]
