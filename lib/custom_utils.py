@@ -65,3 +65,16 @@ def get_semester_asana(df, code):
 def get_semester_via_col(df, col, code):
     start_date, end_date = get_semester_date_range(code)
     return df[(df[col] > start_date) & (df[col] < end_date)]
+
+def duration_to_delta(dur):
+    dur = str(dur)
+    
+    # pad hours
+    if len(dur.split(':')) != 3:
+        dur = '00:'+dur
+       
+    # convert to datetime
+    t = datetime.datetime.strptime(dur,"%H:%M:%S")
+    
+    # extract duration from datetime
+    return datetime.timedelta(hours=t.hour, minutes=t.minute, seconds=t.second)
