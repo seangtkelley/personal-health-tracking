@@ -1,3 +1,6 @@
 [submodule "lib/python_fitbit"]
 	path = lib/python_fitbit
 	url = https://github.com/orcasgit/python-fitbit.git
+[submodule "run-visualization"]
+	path = run-visualization
+	url = git@github.com:seangtkelley/run-visualization.git
